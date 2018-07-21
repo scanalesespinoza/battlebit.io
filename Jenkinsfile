@@ -8,11 +8,11 @@ def envStage = utils.environmentNamespace('stage')
 def envProd = utils.environmentNamespace('run')
 def setupScript = null
 
-mavenNode {
+nodejsNode {
   checkout scm
   if (utils.isCI()) {
 
-    mavenCI{}
+    nodejsCI{}
     
   } else if (utils.isCD()) {
     /*
@@ -30,9 +30,9 @@ mavenNode {
     }
     
     echo 'NOTE: running pipelines for the first time will take longer as build and base docker images are pulled onto the node'
-    container(name: 'maven') {
+    container(name: 'nodejs') {
       stage('Build Release') {
-        mavenCanaryRelease {
+        nodejsCanaryRelease {
           version = canaryVersion
         }
         //stash deployment manifests
